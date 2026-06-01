@@ -15,7 +15,7 @@ Built with HTML, CSS and JavaScript using the GNews API.
 - GNews API — real time news data
 
 ## Live Demo
-[Click here to view](your-github-pages-link-here)
+[Click here to view](https://lavinasaini68-hub.github.io/Music-gazette/)
 
 ## Author
 Lavina Saini
