@@ -1,0 +1,17 @@
+# API Keys and Credentials - NEVER upload these!
+credentials.json
+*.json
+
+# Python files with API keys
+Main.py
+main.py
+
+# Python environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db

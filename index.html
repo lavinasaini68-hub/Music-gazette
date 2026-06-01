@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Music News Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #f4e9d0;
+      background-image:
+        url("https://www.transparenttextures.com/patterns/old-mathematics.png");
+      color: #2c1a0e;
+      font-family: 'IM Fell English', serif;
+      padding: 2rem;
+    }
+
+    /* Top date bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      border-top: 3px double #2c1a0e;
+      border-bottom: 1px solid #2c1a0e;
+      padding: 0.3rem 0;
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* Newspaper Header */
+    header {
+      text-align: center;
+      border-bottom: 4px double #2c1a0e;
+      padding-bottom: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .paper-name {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 3rem;
+  color: #2c1a0e;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+    }
+
+    .tagline {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: #5c3d1e;
+      letter-spacing: 0.15em;
+      margin-top: 0.3rem;
+    }
+
+    .header-divider {
+      border: none;
+      border-top: 1px solid #2c1a0e;
+      margin: 0.5rem 0;
+    }
+
+    .edition-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      padding: 0.3rem 0;
+      border-top: 1px solid #2c1a0e;
+      border-bottom: 3px double #2c1a0e;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      font-style: italic;
+      color: #5c3d1e;
+      padding: 2rem;
+      font-size: 1rem;
+    }
+
+    /* News Grid */
+    #news-container {
+      column-count: 3;
+      column-gap: 1.5rem;
+      column-rule: 1px solid #b8966e;
+    }
+
+    /* News Card */
+    .news-card {
+      break-inside: avoid;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #b8966e;
+    }
+
+    .news-card:last-child {
+      border-bottom: none;
+    }
+
+    /* Featured first card */
+    .news-card.featured {
+      column-span: all;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px double #2c1a0e;
+      margin-bottom: 1.5rem;
+    }
+
+    .featured-image {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  object-position: center top;
+  filter: sepia(80%) contrast(0.9) brightness(0.95);
+  border: 2px solid #2c1a0e;
+    }
+
+    .featured-image-placeholder {
+  width: 100%;
+  height: 350px;
+  background: #d4b896;
+  border: 2px solid #2c1a0e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+    }
+
+    .featured-content {}
+
+    .category-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #5c3d1e;
+      border-bottom: 1px solid #5c3d1e;
+      display: inline-block;
+      padding-bottom: 0.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #1a0e05;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-card.featured h2 {
+      font-size: 1.8rem;
+    }
+
+    .byline {
+      font-size: 0.7rem;
+      font-style: italic;
+      color: #5c3d1e;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .divider-ornament {
+      text-align: center;
+      color: #8b5e3c;
+      font-size: 0.8rem;
+      margin: 0.4rem 0;
+      letter-spacing: 0.3em;
+    }
+
+    .news-card p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: #2c1a0e;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    .read-more {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-size: 0.72rem;
+      font-style: italic;
+      color: #5c3d1e;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid #5c3d1e;
+    }
+
+    .read-more:hover {
+      color: #2c1a0e;
+    }
+
+    .source-name {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #8b5e3c;
+      margin-top: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 2rem;
+      border-top: 3px double #2c1a0e;
+      padding-top: 0.8rem;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #5c3d1e;
+      font-style: italic;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <span id="todayDate">Monday, June 1, 2026</span>
+    <span>❖ ESTABLISHED 2026 ❖</span>
+    <span>PRICE: FREE</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="paper-name">The Music Gazette</div>
+    <div class="tagline">"All The News That's Fit To Hear"</div>
+    <hr class="header-divider"/>
+  </header>
+
+  <!-- Edition Bar -->
+  <div class="edition-bar">
+    <span>VOL. I . . . No. 1</span>
+    <span>✦ MUSIC · CULTURE · ENTERTAINMENT ✦</span>
+    <span id="editionDate">MORNING EDITION</span>
+  </div>
+
+  <!-- News Cards -->
+  <div id="news-container">
+    <div class="loading">~ Fetching the latest dispatches from our correspondents ~</div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>❖ The Music Gazette · Powered by GNews API · All Rights Reserved 2026 ❖</p>
+  </footer>
+
+<script>
+  // Set today's date
+  const today = new Date();
+  const dateOptions = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+  document.getElementById("todayDate").textContent = today.toLocaleDateString('en-US', dateOptions).toUpperCase();
+
+  const hour = today.getHours();
+  document.getElementById("editionDate").textContent =
+    hour < 12 ? "MORNING EDITION" : hour < 17 ? "AFTERNOON EDITION" : "EVENING EDITION";
+
+  // Fetch news
+  const API_KEY = "6f99ac15dfe4a592d4a87b50de9d91ba";
+  const URL = `https://gnews.io/api/v4/search?q=music&lang=en&max=10&apikey=${API_KEY}`;
+
+  fetch(URL)
+    .then(res => res.json())
+    .then(data => {
+      const articles = data.articles;
+      const container = document.getElementById("news-container");
+      container.innerHTML = "";
+
+      articles.forEach((article, index) => {
+        const isFeatured = index === 0;
+        const card = document.createElement("div");
+        card.className = isFeatured ? "news-card featured" : "news-card";
+
+        const imageHTML = article.image
+          ? `<img class="featured-image" src="${article.image}" alt="news image" onerror="this.style.display='none'"/>`
+          : `<div class="featured-image-placeholder">🎵</div>`;
+
+        if (isFeatured) {
+          card.innerHTML = `
+            ${imageHTML}
+            <div class="featured-content">
+              <div class="category-tag">✦ Featured Story ✦</div>
+              <h2>${article.title}</h2>
+              <div class="byline">By Our Music Correspondent · ${new Date(article.publishedAt).toDateString()}</div>
+              <div class="divider-ornament">— ✦ —</div>
+              <p>${article.description ?? "Read the full story for more details."}</p>
+              <a class="read-more" href="${article.url}" target="_blank">Continue Reading »</a>
+              <p class="source-name">📰 ${article.source.name}</p>
+            </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <div class="category-tag">✦ Music News ✦</div>
+            <h2>${article.title}</h2>
+            <div class="byline">By Our Correspondent · ${new Date(article.publishedAt).toDateString()}</div>
+            <div class="divider-ornament">— ✦ —</div>
+            <p>${article.description ?? "Read the full story for more details."}</p>
+            <a class="read-more" href="${article.url}" target="_blank">Continue Reading »</a>
+            <p class="source-name">📰 ${article.source.name}</p>
+          `;
+        }
+
+        container.appendChild(card);
+      });
+    })
+    .catch(err => {
+      document.getElementById("news-container").innerHTML =
+        `<div class="loading">~ Could not fetch news. Please try again later. ~</div>`;
+    });
+</script>
+
+</body>
+</html>
