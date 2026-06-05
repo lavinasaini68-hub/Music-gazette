@@ -9,14 +9,12 @@
 
     body {
       background-color: #f4e9d0;
-      background-image:
-        url("https://www.transparenttextures.com/patterns/old-mathematics.png");
+      background-image: url("https://www.transparenttextures.com/patterns/old-mathematics.png");
       color: #2c1a0e;
       font-family: 'IM Fell English', serif;
       padding: 2rem;
     }
 
-    /* Top date bar */
     .top-bar {
       display: flex;
       justify-content: space-between;
@@ -28,7 +26,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* Newspaper Header */
     header {
       text-align: center;
       border-bottom: 4px double #2c1a0e;
@@ -37,11 +34,11 @@
     }
 
     .paper-name {
-  font-family: 'Cinzel Decorative', cursive;
-  font-size: 3rem;
-  color: #2c1a0e;
-  line-height: 1.2;
-  letter-spacing: 0.05em;
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 3rem;
+      color: #2c1a0e;
+      line-height: 1.2;
+      letter-spacing: 0.05em;
     }
 
     .tagline {
@@ -70,7 +67,6 @@
       margin-bottom: 1.5rem;
     }
 
-    /* Loading */
     .loading {
       text-align: center;
       font-style: italic;
@@ -79,14 +75,12 @@
       font-size: 1rem;
     }
 
-    /* News Grid */
     #news-container {
       column-count: 3;
       column-gap: 1.5rem;
       column-rule: 1px solid #b8966e;
     }
 
-    /* News Card */
     .news-card {
       break-inside: avoid;
       margin-bottom: 1.5rem;
@@ -94,11 +88,8 @@
       border-bottom: 1px solid #b8966e;
     }
 
-    .news-card:last-child {
-      border-bottom: none;
-    }
+    .news-card:last-child { border-bottom: none; }
 
-    /* Featured first card */
     .news-card.featured {
       column-span: all;
       display: grid;
@@ -110,26 +101,24 @@
     }
 
     .featured-image {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  object-position: center top;
-  filter: sepia(80%) contrast(0.9) brightness(0.95);
-  border: 2px solid #2c1a0e;
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      object-position: center top;
+      filter: sepia(80%) contrast(0.9) brightness(0.95);
+      border: 2px solid #2c1a0e;
     }
 
     .featured-image-placeholder {
-  width: 100%;
-  height: 350px;
-  background: #d4b896;
-  border: 2px solid #2c1a0e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
+      width: 100%;
+      height: 350px;
+      background: #d4b896;
+      border: 2px solid #2c1a0e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
     }
-
-    .featured-content {}
 
     .category-tag {
       font-size: 0.6rem;
@@ -151,9 +140,7 @@
       margin-bottom: 0.5rem;
     }
 
-    .news-card.featured h2 {
-      font-size: 1.8rem;
-    }
+    .news-card.featured h2 { font-size: 1.8rem; }
 
     .byline {
       font-size: 0.7rem;
@@ -190,9 +177,7 @@
       border-bottom: 1px solid #5c3d1e;
     }
 
-    .read-more:hover {
-      color: #2c1a0e;
-    }
+    .read-more:hover { color: #2c1a0e; }
 
     .source-name {
       font-size: 0.68rem;
@@ -202,7 +187,6 @@
       margin-top: 0.5rem;
     }
 
-    /* Footer */
     footer {
       margin-top: 2rem;
       border-top: 3px double #2c1a0e;
@@ -217,95 +201,113 @@
 </head>
 <body>
 
-  <!-- Top Bar -->
   <div class="top-bar">
     <span id="todayDate">Monday, June 1, 2026</span>
     <span>❖ ESTABLISHED 2026 ❖</span>
     <span>PRICE: FREE</span>
   </div>
 
-  <!-- Header -->
   <header>
     <div class="paper-name">The Music Gazette</div>
     <div class="tagline">"All The News That's Fit To Hear"</div>
     <hr class="header-divider"/>
   </header>
 
-  <!-- Edition Bar -->
   <div class="edition-bar">
     <span>VOL. I . . . No. 1</span>
     <span>✦ MUSIC · CULTURE · ENTERTAINMENT ✦</span>
     <span id="editionDate">MORNING EDITION</span>
   </div>
 
-  <!-- News Cards -->
   <div id="news-container">
     <div class="loading">~ Fetching the latest dispatches from our correspondents ~</div>
   </div>
 
-  <!-- Footer -->
   <footer>
     <p>❖ The Music Gazette · Powered by GNews API · All Rights Reserved 2026 ❖</p>
   </footer>
 
 <script>
-  // Set today's date
+  // Date setup
   const today = new Date();
   const dateOptions = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
   document.getElementById("todayDate").textContent = today.toLocaleDateString('en-US', dateOptions).toUpperCase();
-
   const hour = today.getHours();
   document.getElementById("editionDate").textContent =
     hour < 12 ? "MORNING EDITION" : hour < 17 ? "AFTERNOON EDITION" : "EVENING EDITION";
 
-  // Fetch news
+  // ✅ API key and URL defined here
   const API_KEY = "6f99ac15dfe4a592d4a87b50de9d91ba";
-  const URL = `https://gnews.io/api/v4/search?q=music&lang=en&max=10&apikey=${API_KEY}`;
+  const NEWS_URL = `https://gnews.io/api/v4/search?q=music&lang=en&max=10&apikey=${API_KEY}`;
 
-  fetch(URL)
-    .then(res => res.json())
-    .then(data => {
-      const articles = data.articles;
-      const container = document.getElementById("news-container");
-      container.innerHTML = "";
+  // ✅ Three proxies to try one by one
+  const PROXIES = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(NEWS_URL)}`,
+    `https://corsproxy.io/?${encodeURIComponent(NEWS_URL)}`,
+    `https://proxy.cors.sh/${NEWS_URL}`
+  ];
 
-      articles.forEach((article, index) => {
-        const isFeatured = index === 0;
-        const card = document.createElement("div");
-        card.className = isFeatured ? "news-card featured" : "news-card";
+  async function fetchWithFallback() {
+    for (let proxy of PROXIES) {
+      try {
+        const res = await fetch(proxy);
+        const data = await res.json();
+        if (data.articles && data.articles.length > 0) {
+          return data;
+        }
+      } catch (e) {
+        continue;
+      }
+    }
+    throw new Error("All proxies failed");
+  }
 
-        const imageHTML = article.image
-          ? `<img class="featured-image" src="${article.image}" alt="news image" onerror="this.style.display='none'"/>`
-          : `<div class="featured-image-placeholder">🎵</div>`;
+  function renderArticles(data) {
+    const articles = data.articles;
+    const container = document.getElementById("news-container");
+    container.innerHTML = "";
 
-        if (isFeatured) {
-          card.innerHTML = `
-            ${imageHTML}
-            <div class="featured-content">
-              <div class="category-tag">✦ Featured Story ✦</div>
-              <h2>${article.title}</h2>
-              <div class="byline">By Our Music Correspondent · ${new Date(article.publishedAt).toDateString()}</div>
-              <div class="divider-ornament">— ✦ —</div>
-              <p>${article.description ?? "Read the full story for more details."}</p>
-              <a class="read-more" href="${article.url}" target="_blank">Continue Reading »</a>
-              <p class="source-name">📰 ${article.source.name}</p>
-            </div>
-          `;
-        } else {
-          card.innerHTML = `
-            <div class="category-tag">✦ Music News ✦</div>
+    articles.forEach((article, index) => {
+      const isFeatured = index === 0;
+      const card = document.createElement("div");
+      card.className = isFeatured ? "news-card featured" : "news-card";
+
+      const imageHTML = article.image
+        ? `<img class="featured-image" src="${article.image}" alt="news image"
+            onerror="this.outerHTML='<div class=&quot;featured-image-placeholder&quot;>🎵</div>'"/>`
+        : `<div class="featured-image-placeholder">🎵</div>`;
+
+      if (isFeatured) {
+        card.innerHTML = `
+          ${imageHTML}
+          <div class="featured-content">
+            <div class="category-tag">✦ Featured Story ✦</div>
             <h2>${article.title}</h2>
-            <div class="byline">By Our Correspondent · ${new Date(article.publishedAt).toDateString()}</div>
+            <div class="byline">By Our Music Correspondent · ${new Date(article.publishedAt).toDateString()}</div>
             <div class="divider-ornament">— ✦ —</div>
             <p>${article.description ?? "Read the full story for more details."}</p>
             <a class="read-more" href="${article.url}" target="_blank">Continue Reading »</a>
             <p class="source-name">📰 ${article.source.name}</p>
-          `;
-        }
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <div class="category-tag">✦ Music News ✦</div>
+          <h2>${article.title}</h2>
+          <div class="byline">By Our Correspondent · ${new Date(article.publishedAt).toDateString()}</div>
+          <div class="divider-ornament">— ✦ —</div>
+          <p>${article.description ?? "Read the full story for more details."}</p>
+          <a class="read-more" href="${article.url}" target="_blank">Continue Reading »</a>
+          <p class="source-name">📰 ${article.source.name}</p>
+        `;
+      }
 
-        container.appendChild(card);
-      });
-    })
+      container.appendChild(card);
+    });
+  }
+
+  fetchWithFallback()
+    .then(data => renderArticles(data))
     .catch(err => {
       document.getElementById("news-container").innerHTML =
         `<div class="loading">~ Could not fetch news. Please try again later. ~</div>`;
